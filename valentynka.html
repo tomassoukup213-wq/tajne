@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Důležité upozornění</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            background-color: #ffe6ea; 
+            margin: 0; 
+            overflow: hidden; 
+            text-align: center;
+        }
+        .container { position: relative; width: 100%; max-width: 600px; z-index: 1; }
+        h1 { color: #d63384; font-size: 2.5rem; margin-bottom: 30px; transition: 0.3s; }
+        
+        .heart {
+            background-color: #ff4d6d;
+            display: inline-block;
+            height: 100px;
+            margin: 0 10px;
+            position: relative;
+            transform: rotate(-45deg);
+            width: 100px;
+            animation: pulse 1.2s infinite;
+            margin-bottom: 50px;
+        }
+        .heart:before, .heart:after {
+            content: "";
+            background-color: #ff4d6d;
+            border-radius: 50%;
+            height: 100px;
+            position: absolute;
+            width: 100px;
+        }
+        .heart:before { top: -50px; left: 0; }
+        .heart:after { left: 50px; top: 0; }
+
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.2); }
+            100% { transform: rotate(-45deg) scale(1); }
+        }
+
+        .buttons { display: flex; justify-content: center; gap: 30px; margin-top: 20px; position: relative; height: 100px; }
+        
+        button { 
+            padding: 15px 35px; 
+            font-size: 1.3rem; 
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-weight: bold;
+        }
+        #yesBtn { background-color: #ff4d6d; color: white; z-index: 2; }
+        #noBtn { 
+            background-color: white; 
+            color: #d63384; 
+            border: 2px solid #d63384; 
+            position: fixed; 
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <div class="heart" id="mainHeart"></div>
+        <h1 id="question">Vanesso, budeš můj Valentýn? ❤️</h1>
+
+        <div class="buttons" id="buttonArea">
+            <button id="yesBtn">ANO</button>
+            <button id="noBtn" style="left: 55%; top: 60%;">NE</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const question = document.getElementById('question');
+        const heart = document.getElementById('mainHeart');
+        const buttonArea = document.getElementById('buttonArea');
+
+        function moveButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 20);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+
+        yesBtn.addEventListener('click', () => {
+            // Tohle smaže tlačítka i původní text a nechá jen JUPÍÍÍ
+            buttonArea.style.display = 'none'; 
+            question.innerHTML = "JUPÍÍÍ! ❤️";
+            question.style.fontSize = "5rem"; // Pořádně to zvětšíme
+            heart.style.animation = "pulse 0.3s infinite"; // Srdce se rozbuší nadšením
+        });
+    </script>
+</body>
+</html>
